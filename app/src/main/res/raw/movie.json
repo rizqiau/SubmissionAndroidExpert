@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "id": 950387,
+      "title": "A Minecraft Movie",
+      "overview": "Four misfits find themselves struggling with ordinary problems when they are suddenly pulled through a mysterious portal...",
+      "poster_path": "/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
+      "release_date": "2025-03-31",
+      "vote_average": 6.007
+    },
+    {
+      "id": 1229730,
+      "title": "Carjackers",
+      "overview": "By day, they're invisible—valets, hostesses, and bartenders at a luxury hotel...",
+      "poster_path": "/wbkPMTz2vVai7Ujyp0ag7AM9SrO.jpg",
+      "release_date": "2025-03-27",
+      "vote_average": 7.057
+    }
+  ]
+}
