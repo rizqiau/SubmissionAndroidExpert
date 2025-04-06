@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission.R
 import com.example.submission.core.data.Resource
-import com.example.submission.core.domain.model.Movie
 import com.example.submission.core.ui.MovieAdapter
 import com.example.submission.core.ui.ViewModelFactory
 import com.example.submission.databinding.FragmentHomeBinding
@@ -25,7 +24,9 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var movieAdapter: MovieAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -36,34 +37,41 @@ class HomeFragment : Fragment() {
         val factory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        movieAdapter = MovieAdapter()
+        movieAdapter = MovieAdapter().apply {
+            setOnItemClick { selectedMovie ->
+                val bundle = Bundle().apply {
+                    putParcelable(DetailFragment.EXTRA_MOVIE, selectedMovie)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+            }
+        }
 
         binding.rvMovie.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
+            setHasFixedSize(true)
         }
-
-        movieAdapter.setOnItemClick { selectedMovie ->
-            val bundle = Bundle().apply {
-                putParcelable(DetailFragment.EXTRA_MOVIE, selectedMovie)
-            }
-            findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
-        }
-
 
         viewModel.movies.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
+
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    val movieList = resource.data as? List<Movie>
-                    movieAdapter.setData(movieList)
+                    resource.data?.let { movieList ->
+                        movieAdapter.submitList(movieList)
+                    }
                 }
+
                 is Resource.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(context, "Error: ${resource.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${resource.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

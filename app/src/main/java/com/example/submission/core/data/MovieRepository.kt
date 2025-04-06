@@ -8,11 +8,8 @@ import com.example.submission.core.domain.model.Movie
 import com.example.submission.core.domain.repository.IMovieRepository
 import com.example.submission.core.utils.AppExecutors
 import com.example.submission.core.utils.DataMapper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 class MovieRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -43,7 +40,7 @@ class MovieRepository(
             }
 
             override fun shouldFetch(data: List<Movie>?): Boolean =
-                data.isNullOrEmpty()
+                data == null || data.isEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> =
                 remoteDataSource.getAllMovies()
@@ -55,22 +52,11 @@ class MovieRepository(
         }.asFlow()
 
     override fun getFavoriteMovies(): Flow<List<Movie>> =
-        localDataSource.getFavoriteMovies().map {
-            DataMapper.mapEntitiesToDomain(it)
+        localDataSource.getFavoriteMovies().map { DataMapper.mapEntitiesToDomain(it)
         }
 
     override fun setFavoriteMovie(movie: Movie, state: Boolean) {
-        val movieEntity = DataMapper.mapDomainToEntity(movie)
-        CoroutineScope(Dispatchers.IO).launch {
-            localDataSource.setFavoriteMovie(movieEntity, state)
-        }
+        val tourismEntity = DataMapper.mapDomainToEntity(movie)
+        appExecutors.diskIO().execute { localDataSource.setFavoriteMovie(tourismEntity, state) }
     }
-
-    override fun isFavorite(movieId: Int): Flow<Boolean> =
-        localDataSource.getMovieDetail(movieId).map { it.isFavorite }
-
-    override fun getMovieDetail(movieId: Int): Flow<Movie> =
-        localDataSource.getMovieDetail(movieId).map {
-            DataMapper.mapEntityToDomain(it)
-        }
 }

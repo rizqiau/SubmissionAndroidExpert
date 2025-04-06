@@ -17,13 +17,13 @@ class LocalDataSource private constructor(private val movieDao: MovieDao) {
 
     fun getAllMovies(): Flow<List<MovieEntity>> = movieDao.getAllMovies()
 
-    fun getFavoriteMovies(): Flow<List<MovieEntity>> = movieDao.getFavoriteMovies()
-
-    fun getMovieDetail(movieId: Int): Flow<MovieEntity> = movieDao.getMovieDetail(movieId)
+    fun getFavoriteMovies(): Flow<List<MovieEntity>> =
+        movieDao.getFavoriteMovies()
 
     suspend fun insertMovies(movieList: List<MovieEntity>) = movieDao.insertMovies(movieList)
 
-    suspend fun setFavoriteMovie(movie: MovieEntity, newState: Boolean) {
-        movieDao.updateFavoriteMovie(movie.copy(isFavorite = newState))
+    fun setFavoriteMovie(movie: MovieEntity, newState: Boolean) {
+        movie.isFavorite = newState
+        movieDao.updateFavorite(movie)
     }
 }

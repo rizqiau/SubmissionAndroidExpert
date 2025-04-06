@@ -16,12 +16,9 @@ interface MovieDao {
     @Query("SELECT * FROM movie WHERE isFavorite = 1")
     fun getFavoriteMovies(): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM movie WHERE id = :movieId")
-    fun getMovieDetail(movieId: Int): Flow<MovieEntity>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movies: List<MovieEntity>)
 
     @Update
-    suspend fun updateFavoriteMovie(movie: MovieEntity)
+    fun updateFavorite(movie: MovieEntity)
 }

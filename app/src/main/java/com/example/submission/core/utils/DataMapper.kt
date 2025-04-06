@@ -28,7 +28,8 @@ object DataMapper {
                 overview = it.overview,
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
-                voteAverage = it.voteAverage
+                voteAverage = it.voteAverage,
+                isFavorite = it.isFavorite
             )
         }
     }
@@ -40,7 +41,8 @@ object DataMapper {
             overview = entity.overview,
             posterPath = entity.posterPath,
             releaseDate = entity.releaseDate,
-            voteAverage = entity.voteAverage
+            voteAverage = entity.voteAverage,
+            isFavorite = entity.isFavorite
         )
 
     fun mapDomainToEntity(domain: Movie): MovieEntity =

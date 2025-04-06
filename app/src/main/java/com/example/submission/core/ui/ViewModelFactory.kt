@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.submission.core.di.Injection
 import com.example.submission.core.domain.usecase.MovieUseCase
+import com.example.submission.detail.DetailViewModel
+import com.example.submission.favorite.FavoriteViewModel
+import com.example.submission.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val movieUseCase: MovieUseCase) :
     ViewModelProvider.NewInstanceFactory() {
@@ -24,6 +27,15 @@ class ViewModelFactory private constructor(private val movieUseCase: MovieUseCas
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
         when {
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(movieUseCase) as T
+            }
+            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
+                FavoriteViewModel(movieUseCase) as T
+            }
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+                DetailViewModel(movieUseCase) as T
+            }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
 }

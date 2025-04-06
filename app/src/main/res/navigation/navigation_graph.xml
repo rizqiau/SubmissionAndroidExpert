@@ -12,13 +12,17 @@
         <action
             app:destination="@+id/detailFragment"
             android:id="@+id/action_homeFragment_to_detailFragment"/>
-
     </fragment>
 
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.submission.favorite.FavoriteFragment"
-        android:label="Favorite" />
+        android:label="Favorite">
+
+        <action
+            app:destination="@+id/detailFragment"
+            android:id="@+id/action_favoriteFragment_to_detailFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
