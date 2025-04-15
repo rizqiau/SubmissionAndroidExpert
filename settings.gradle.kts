@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Submission"
 include(":app")
- 
+include(":core")
+include(":favorite")

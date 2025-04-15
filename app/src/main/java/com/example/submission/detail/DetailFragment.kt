@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.submission.R
 import com.example.submission.core.domain.model.Movie
-import com.example.submission.core.ui.ViewModelFactory
 import com.example.submission.databinding.FragmentDetailBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var detailViewModel: DetailViewModel
+    private val viewModel by viewModel<DetailViewModel>()
 
     companion object {
         const val EXTRA_MOVIE = "extra_movie"
@@ -35,21 +34,18 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = ViewModelFactory.getInstance(requireContext())
-        detailViewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-
         val movie = arguments?.getParcelable<Movie>(EXTRA_MOVIE)
         movie?.let {
-            detailViewModel.setSelectedMovie(it)
+            viewModel.setSelectedMovie(it)
         }
 
-        detailViewModel.selectedMovie.observe(viewLifecycleOwner) { movie ->
+        viewModel.selectedMovie.observe(viewLifecycleOwner) { movie ->
             showDetail(movie)
             updateFavoriteIcon(movie.isFavorite)
         }
 
         binding.fabFavorite.setOnClickListener {
-            detailViewModel.toggleFavorite()
+            viewModel.toggleFavorite()
         }
     }
 

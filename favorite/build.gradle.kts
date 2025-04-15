@@ -1,21 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
 }
-
 android {
-    namespace = "com.example.submission"
-    compileSdk = 35
+    namespace = "com.example.submission.favorite"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.submission"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -39,12 +33,11 @@ android {
         viewBinding = true
         buildConfig = true
     }
-    dynamicFeatures += setOf(":favorite")
 }
 
 dependencies {
+    implementation(project(":app"))
     implementation(project(":core"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -75,8 +68,4 @@ dependencies {
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation (libs.androidx.navigation.ui.ktx)
     implementation(libs.koin.android)
-    debugImplementation (libs.leakcanary.android)
-
-    implementation(libs.android.database.sqlcipher)
-    implementation(libs.androidx.sqlite.ktx)
 }
