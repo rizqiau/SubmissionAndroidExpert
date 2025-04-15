@@ -1,0 +1,36 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@2.4.0
+
+jobs:
+  build-and-test:
+    executor:
+      name: android/android-machine
+      tag: default
+    steps:
+      - checkout
+
+      - run:
+          name: Give gradlew permission
+          command: chmod +x gradlew
+
+      - run:
+          name: Download Dependencies
+          command: ./gradlew dependencies
+
+      - android/run-tests:
+          test-command: ./gradlew lint testDebug --continue
+
+      - android/start-emulator-and-run-tests:
+          test-command: ./gradlew connectedDebugAndroidTest
+          system-image: system-images;android-29;google_apis;x86
+
+      - run:
+          name: Assemble Release Build
+          command: ./gradlew assembleRelease
+
+workflows:
+  android-ci:
+    jobs:
+      - build-and-test
