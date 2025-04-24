@@ -1,4 +1,4 @@
-package com.example.submission.favorite
+package com.example.submission.favorite.favorite
 
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission.R
-import com.example.submission.databinding.FragmentFavoriteBinding
+import com.example.submission.core.ui.MovieAdapter
 import com.example.submission.detail.DetailFragment
-import com.example.submission.favorite.favorite.favoriteModule
+import com.example.submission.favorite.databinding.FragmentFavoriteBinding
 import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -22,7 +22,7 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<FavoriteViewModel>()
-    private lateinit var adapter: com.example.submission.core.ui.MovieAdapter
+    private lateinit var adapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,7 +37,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = com.example.submission.core.ui.MovieAdapter().apply {
+        adapter = MovieAdapter().apply {
             setOnItemClick { selectedMovie ->
                 val bundle = Bundle().apply {
                     putParcelable(DetailFragment.EXTRA_MOVIE, selectedMovie)

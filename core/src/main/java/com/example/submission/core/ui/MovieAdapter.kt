@@ -17,14 +17,14 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.ListViewHolder>(DIFF_CALLBA
         this.onItemClick = callback
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.ListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ItemMovieBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return ListViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MovieAdapter.ListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val data = getItem(position)
         holder.bind(data)
     }

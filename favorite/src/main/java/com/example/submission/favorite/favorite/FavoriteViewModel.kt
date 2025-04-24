@@ -1,4 +1,4 @@
-package com.example.submission.favorite
+package com.example.submission.favorite.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
