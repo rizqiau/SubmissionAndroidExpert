@@ -16,7 +16,6 @@
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.submission.favorite.FavoriteFragment"
         android:label="Favorite">
 
         <action
