@@ -4,22 +4,20 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
 }
+
 android {
     namespace = "com.example.submission.favorite"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 
