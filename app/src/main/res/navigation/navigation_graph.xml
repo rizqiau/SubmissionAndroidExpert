@@ -15,15 +15,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/favoriteFragment"
-        android:label="Favorite">
-
-        <action
-            app:destination="@+id/detailFragment"
-            android:id="@+id/action_favoriteFragment_to_detailFragment"/>
-    </fragment>
-
-    <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.submission.detail.DetailFragment"
         android:label="Detail" />

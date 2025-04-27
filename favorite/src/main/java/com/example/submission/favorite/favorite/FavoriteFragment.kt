@@ -1,5 +1,6 @@
 package com.example.submission.favorite.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission.R
 import com.example.submission.core.ui.MovieAdapter
+import com.example.submission.detail.DetailActivity
 import com.example.submission.detail.DetailFragment
 import com.example.submission.favorite.databinding.FragmentFavoriteBinding
 import org.koin.android.ext.android.getKoin
@@ -39,10 +41,9 @@ class FavoriteFragment : Fragment() {
 
         adapter = MovieAdapter().apply {
             setOnItemClick { selectedMovie ->
-                val bundle = Bundle().apply {
-                    putParcelable(DetailFragment.EXTRA_MOVIE, selectedMovie)
-                }
-                findNavController().navigate(R.id.action_favoriteFragment_to_detailFragment, bundle)
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra(DetailFragment.EXTRA_MOVIE, selectedMovie)
+                startActivity(intent)
             }
         }
 

@@ -1,11 +1,13 @@
 package com.example.submission.home
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission.R
@@ -21,7 +23,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<HomeViewModel>()
-    private lateinit var movieAdapter: com.example.submission.core.ui.MovieAdapter
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -33,7 +35,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieAdapter = com.example.submission.core.ui.MovieAdapter().apply {
+        movieAdapter = MovieAdapter().apply {
             setOnItemClick { selectedMovie ->
                 val bundle = Bundle().apply {
                     putParcelable(DetailFragment.EXTRA_MOVIE, selectedMovie)
