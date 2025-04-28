@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class kotlin.** { *; }
+-keep class kotlinx.** { *; }
+-keepclassmembers class kotlin.LazyKt { *; }
+
+-keep class androidx.test.** { *; }
+-keep class androidx.test.platform.** { *; }
+-keep class androidx.test.runner.** { *; }
+
+-keepclassmembers class * {
+    public void *(android.content.Context, android.util.AttributeSet);
+}
